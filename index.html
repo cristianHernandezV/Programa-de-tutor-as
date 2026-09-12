@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Gestor de tareas personal con registro simulado.">
+  <title>Clara | Gestor de tareas</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <section class="auth-view" id="auth-view">
+      <button class="theme-toggle theme-toggle-auth" type="button" data-theme-toggle aria-label="Activar tema oscuro" aria-pressed="false"><span class="theme-icon" aria-hidden="true">☾</span><span class="theme-label">Tema oscuro</span></button>
+      <div class="auth-intro">
+        <div class="brand-mark" aria-hidden="true">C</div>
+        <p class="eyebrow">Organiza tu día</p>
+        <h1>Menos ruido.<br><span>Más claridad.</span></h1>
+        <p class="intro-copy">Un espacio sereno para capturar pendientes, priorizar lo importante y avanzar con intención.</p>
+        <div class="intro-note"><span class="spark">✦</span> Tus tareas se guardan solo en este navegador.</div>
+      </div>
+
+      <div class="auth-panel">
+        <div class="auth-tabs" role="tablist" aria-label="Acceso a la aplicación">
+          <button class="auth-tab is-active" type="button" data-auth-tab="login">Iniciar sesión</button>
+          <button class="auth-tab" type="button" data-auth-tab="register">Crear cuenta</button>
+        </div>
+
+        <form class="auth-form" id="login-form">
+          <div class="form-heading">
+            <p class="eyebrow">Qué bueno verte</p>
+            <h2>Entra a tu espacio</h2>
+          </div>
+          <label for="login-email">Correo electrónico</label>
+          <input id="login-email" name="email" type="email" autocomplete="email" placeholder="tu@correo.com" required>
+          <label for="login-password">Contraseña</label>
+          <input id="login-password" name="password" type="password" autocomplete="current-password" placeholder="Mínimo 6 caracteres" required minlength="6">
+          <p class="form-message" id="login-message" role="alert"></p>
+          <button class="button button-primary button-full" type="submit">Entrar <span aria-hidden="true">→</span></button>
+          <p class="demo-hint">Demo local: crea una cuenta para comenzar.</p>
+        </form>
+
+        <form class="auth-form is-hidden" id="register-form">
+          <div class="form-heading">
+            <p class="eyebrow">Un nuevo comienzo</p>
+            <h2>Crea tu cuenta</h2>
+          </div>
+          <label for="register-name">Tu nombre</label>
+          <input id="register-name" name="name" type="text" autocomplete="name" placeholder="¿Cómo te llamas?" required maxlength="40">
+          <label for="register-email">Correo electrónico</label>
+          <input id="register-email" name="email" type="email" autocomplete="email" placeholder="tu@correo.com" required>
+          <label for="register-password">Contraseña</label>
+          <input id="register-password" name="password" type="password" autocomplete="new-password" placeholder="Mínimo 6 caracteres" required minlength="6">
+          <p class="form-message" id="register-message" role="alert"></p>
+          <button class="button button-primary button-full" type="submit">Crear mi cuenta <span aria-hidden="true">→</span></button>
+        </form>
+      </div>
+    </section>
+
+    <section class="dashboard-view is-hidden" id="dashboard-view">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="Clara, inicio">
+          <span class="brand-mark brand-mark-small" aria-hidden="true">C</span>
+          <span>clara<span class="brand-dot">.</span></span>
+        </a>
+        <div class="topbar-actions">
+          <span class="today-label" id="today-label"></span>
+          <button class="theme-toggle" type="button" data-theme-toggle aria-label="Activar tema oscuro" aria-pressed="false"><span class="theme-icon" aria-hidden="true">☾</span><span class="theme-label">Tema oscuro</span></button>
+          <button class="user-menu" id="user-menu" type="button" aria-expanded="false" aria-controls="user-dropdown">
+            <span class="avatar" id="user-avatar">U</span>
+            <span class="user-name" id="user-name">Usuario</span>
+            <span class="chevron" aria-hidden="true">⌄</span>
+          </button>
+          <div class="user-dropdown is-hidden" id="user-dropdown">
+            <button type="button" id="logout-button">Cerrar sesión</button>
+          </div>
+        </div>
+      </header>
+
+      <div class="dashboard-content">
+        <aside class="sidebar">
+          <div class="welcome-block">
+            <p class="eyebrow">Tu tablero</p>
+            <h1>Hola, <span id="welcome-name">amiga</span>.</h1>
+            <p>Haz espacio para lo que importa hoy.</p>
+          </div>
+          <nav class="task-nav" aria-label="Vista de tareas">
+            <button class="nav-item is-active" type="button" data-filter="all"><span class="nav-icon">◌</span> Todas <span class="nav-count" id="all-count">0</span></button>
+            <button class="nav-item" type="button" data-filter="pending"><span class="nav-icon">○</span> Pendientes <span class="nav-count" id="pending-count">0</span></button>
+            <button class="nav-item" type="button" data-filter="completed"><span class="nav-icon">✓</span> Completadas <span class="nav-count" id="completed-count">0</span></button>
+          </nav>
+          <div class="sidebar-quote"><span>“</span><p>La claridad es una forma de amabilidad contigo.</p></div>
+        </aside>
+
+        <section class="task-area" aria-labelledby="task-title">
+          <div class="task-header">
+            <div>
+              <p class="eyebrow" id="task-period">Resumen de hoy</p>
+              <h2 id="task-title">Todas tus tareas</h2>
+            </div>
+            <button class="button button-primary add-button" id="add-task-button" type="button"><span aria-hidden="true">＋</span> Nueva tarea</button>
+          </div>
+
+          <div class="stats-row" aria-label="Resumen de tareas">
+            <div class="stat-card"><span class="stat-label">Total</span><strong id="stat-total">0</strong><span class="stat-caption">tareas</span></div>
+            <div class="stat-card accent-card"><span class="stat-label">En curso</span><strong id="stat-pending">0</strong><span class="stat-caption">por resolver</span></div>
+            <div class="stat-card"><span class="stat-label">Completado</span><strong id="stat-progress">0%</strong><span class="stat-caption">de avance</span></div>
+          </div>
+
+          <div class="toolbar">
+            <label class="search-field" for="search-input"><span aria-hidden="true">⌕</span><input id="search-input" type="search" placeholder="Buscar tareas..." autocomplete="off"></label>
+            <label class="sort-field" for="sort-select"><span>Ordenar:</span><select id="sort-select"><option value="created">Más recientes</option><option value="priority">Prioridad</option><option value="dueDate">Fecha límite</option></select></label>
+          </div>
+
+          <div class="task-list" id="task-list" aria-live="polite"></div>
+          <div class="empty-state is-hidden" id="empty-state"><div class="empty-icon">✦</div><h3 id="empty-title">Todo despejado</h3><p id="empty-copy">Añade una tarea y empieza a avanzar.</p><button class="button button-secondary" id="empty-action" type="button">Crear primera tarea</button></div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal-backdrop is-hidden" id="task-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <form class="task-modal" id="task-form">
+      <button class="modal-close" id="modal-close" type="button" aria-label="Cerrar">×</button>
+      <p class="eyebrow">Una cosa a la vez</p>
+      <h2 id="modal-title">Nueva tarea</h2>
+      <label for="task-title-input">¿Qué necesitas hacer?</label>
+      <input id="task-title-input" name="title" type="text" placeholder="Ej. Preparar la presentación" required maxlength="120">
+      <label for="task-notes-input">Notas <span>(opcional)</span></label>
+      <textarea id="task-notes-input" name="notes" rows="3" placeholder="Añade algún detalle útil..."></textarea>
+      <div class="form-grid">
+        <div><label for="task-priority-input">Prioridad</label><select id="task-priority-input" name="priority"><option value="low">Baja</option><option value="medium" selected>Media</option><option value="high">Alta</option></select></div>
+        <div><label for="task-due-input">Fecha límite</label><input id="task-due-input" name="dueDate" type="date"></div>
+      </div>
+      <div class="modal-actions"><button class="button button-secondary" id="modal-cancel" type="button">Cancelar</button><button class="button button-primary" type="submit" id="modal-submit">Guardar tarea</button></div>
+    </form>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
